@@ -36,8 +36,9 @@
         <header>
             <div class="description">
                 <div style="background-image: url(http://upload.jianshu.io/users/upload_avatars/14616552/034d41c4-7634-4395-a80e-40de33fcf693.jpg); width: 128px; height: 128px; background-size: cover; border-radius: 50%; margin: 0 auto;"
-                    v-on:click="alert('我是老张的哲学的头像')">
+                    v-on:click="log('我是头像')">
                 </div>
+                <button-counter></button-counter>
                 <p class="name" v-text="author"></p>
                 <p class="desc">Software Engineer.Currently working in Microsoft co-operation.</p>
             </div>
@@ -105,7 +106,7 @@
             </h2>
             <my-component></my-component>
         </div>
-        <footer-vue :fooPro="author" @click="doThis(arg1)"></footer-vue>
+        <footer-vue :foo-pro="author"></footer-vue>
         <div class="layout-bg"></div>
     </div>
 
@@ -117,18 +118,27 @@
                     <div id="footer-vue">
                         <p>2018 <a href="#">Iwenli's Blog</a> - Hosted by <a href="#" style="font-weight: bold">Coding Pages</a></p>
                         <p>
-                            <a  href="#">京ICP备00000000号{{fooPro}}</a>
+                            <a href="#">京ICP备00000000号 {{fooPro}}</a>
                         </p>
                     </div>
                     `,
             props: ['fooPro'],//这里根据组件的props属性，来被动接受组件传递来的参数
-            data() {
+            data: function () {
                 return {
                     message: 'hello world'
                 }
             }
         })
 
+        // 定义一个名为 button-counter 的新组件
+        Vue.component('button-counter', {
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+        })
 
         let vm = new Vue({
             el: '#app',//容器
@@ -157,11 +167,11 @@
                 list3: [
                     { name: "Html5" },
                     { name: "CSS3" },
-                    { name: "JAVASCTIPT" },
+                    { name: "javascript" },
                     { name: "SQL" },
                     { name: "C#" },
-                    { name: "Wechat小程序" },
-                    { name: "ASP.NET" }
+                    { name: "Wechat" },
+                    { name: "ASP.NET Core" }
                 ],
                 isShow: false
             },
@@ -193,73 +203,72 @@
                     }
                 }
             },
-            beforeCreate: function () {
-                console.group('beforeCreate 创建前状态===============》');
-                console.log("%c%s", "color:red", "el     : " + this.$el); //undefined
-                console.log("%c%s", "color:red", "data   : " + this.$data); //undefined
-                console.log("%c%s", "color:red", "author: " + this.author); //undefined
+            // beforeCreate: function () {
+            //     console.group('beforeCreate 创建前状态===============》');
+            //     console.log("%c%s", "color:red", "el     : " + this.$el); //undefined
+            //     console.log("%c%s", "color:red", "data   : " + this.$data); //undefined
+            //     console.log("%c%s", "color:red", "author: " + this.author); //undefined
 
-            },
-            created: function () {
-                console.group('created 创建完毕状态===============》');
-                console.log("%c%s", "color:red", "el     : " + this.$el); //undefined
-                console.log("%c%s", "color:red", "data   : " + this.$data); //已被初始化
-                console.log("%c%s", "color:red", "author: " + this.author); //已被初始化
+            // },
+            // created: function () {
+            //     console.group('created 创建完毕状态===============》');
+            //     console.log("%c%s", "color:red", "el     : " + this.$el); //undefined
+            //     console.log("%c%s", "color:red", "data   : " + this.$data); //已被初始化
+            //     console.log("%c%s", "color:red", "author: " + this.author); //已被初始化
 
-            },
-            beforeMount: function () {
-                console.group('beforeMount 挂载前状态===============》');
-                console.log("%c%s", "color:red", "el     : " + (this.$el)); //已被初始化
-                console.log(this.$el);
-                console.log("%c%s", "color:red", "data   : " + this.$data); //已被初始化
-                console.log("%c%s", "color:red", "author: " + this.author); //已被初始化
+            // },
+            // beforeMount: function () {
+            //     console.group('beforeMount 挂载前状态===============》');
+            //     console.log("%c%s", "color:red", "el     : " + (this.$el)); //已被初始化
+            //     console.log(this.$el);
+            //     console.log("%c%s", "color:red", "data   : " + this.$data); //已被初始化
+            //     console.log("%c%s", "color:red", "author: " + this.author); //已被初始化
 
-            },
-            mounted: function () {
-                console.group('mounted 挂载结束状态===============》');
-                console.log("%c%s", "color:red", "el     : " + this.$el); //已被初始化
-                console.log(this.$el);
-                console.log("%c%s", "color:red", "data   : " + this.$data); //已被初始化
-                console.log("%c%s", "color:red", "author: " + this.author); //已被初始化
+            // },
+            // mounted: function () {
+            //     console.group('mounted 挂载结束状态===============》');
+            //     console.log("%c%s", "color:red", "el     : " + this.$el); //已被初始化
+            //     console.log(this.$el);
+            //     console.log("%c%s", "color:red", "data   : " + this.$data); //已被初始化
+            //     console.log("%c%s", "color:red", "author: " + this.author); //已被初始化
 
-            },
-            beforeUpdate: function () {
-                console.group('beforeUpdate 更新前状态===============》');
-                console.log("%c%s", "color:red", "el     : " + this.$el);
-                console.log(this.$el);
-                console.log("%c%s", "color:red", "data   : " + this.$data);
-                console.log("%c%s", "color:red", "author: " + this.author);
-            },
-            updated: function () {
-                console.group('updated 更新完成状态===============》');
-                console.log("%c%s", "color:red", "el     : " + this.$el);
-                console.log(this.$el);
-                console.log("%c%s", "color:red", "data   : " + this.$data);
-                console.log("%c%s", "color:red", "author: " + this.author);
-            },
-            beforeDestroy: function () {
-                console.group('beforeDestroy 销毁前状态===============》');
-                console.log("%c%s", "color:red", "el     : " + this.$el);
-                console.log(this.$el);
-                console.log("%c%s", "color:red", "data   : " + this.$data);
-                console.log("%c%s", "color:red", "author: " + this.author);
-            },
-            destroyed: function () {
-                console.group('destroyed 销毁完成状态===============》');
-                console.log("%c%s", "color:red", "el     : " + this.$el);
-                console.log(this.$el);
-                console.log("%c%s", "color:red", "data   : " + this.$data);
-                console.log("%c%s", "color:red", "author: " + this.author)
-            },
+            // },
+            // beforeUpdate: function () {
+            //     console.group('beforeUpdate 更新前状态===============》');
+            //     console.log("%c%s", "color:red", "el     : " + this.$el);
+            //     console.log(this.$el);
+            //     console.log("%c%s", "color:red", "data   : " + this.$data);
+            //     console.log("%c%s", "color:red", "author: " + this.author);
+            // },
+            // updated: function () {
+            //     console.group('updated 更新完成状态===============》');
+            //     console.log("%c%s", "color:red", "el     : " + this.$el);
+            //     console.log(this.$el);
+            //     console.log("%c%s", "color:red", "data   : " + this.$data);
+            //     console.log("%c%s", "color:red", "author: " + this.author);
+            // },
+            // beforeDestroy: function () {
+            //     console.group('beforeDestroy 销毁前状态===============》');
+            //     console.log("%c%s", "color:red", "el     : " + this.$el);
+            //     console.log(this.$el);
+            //     console.log("%c%s", "color:red", "data   : " + this.$data);
+            //     console.log("%c%s", "color:red", "author: " + this.author);
+            // },
+            // destroyed: function () {
+            //     console.group('destroyed 销毁完成状态===============》');
+            //     console.log("%c%s", "color:red", "el     : " + this.$el);
+            //     console.log(this.$el);
+            //     console.log("%c%s", "color:red", "data   : " + this.$data);
+            //     console.log("%c%s", "color:red", "author: " + this.author)
+            // },
             watch: {
                 nameCpt() {
                     //这里面可以执行一旦监听的值发生变化你想做的操作
-
                 }
             },
             //我们的方法都统一写到这里
             methods: {
-                alert(obj) {
+                log(obj) {
                     console.log(obj);
                 },
                 //添加事件
@@ -295,15 +304,6 @@
             }
         });
 
-        // 定义一个名为 button-counter 的新组件
-        Vue.component('button-counter', {
-            data: function () {
-                return {
-                    count: 0
-                }
-            },
-            template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
-        })
     </script>
 </body>
 
